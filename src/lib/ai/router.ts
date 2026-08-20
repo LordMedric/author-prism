@@ -1,5 +1,6 @@
 import { ClaudeProvider, ChatMessage } from "./providers/claude";
 import { GeminiProvider } from "./providers/gemini";
+import { OpenRouterProvider } from "./providers/openrouter";
 import { promptBuilder, PromptContext } from "./prompt-builder";
 
 export type AIProviderName = "claude" | "gemini";
@@ -86,11 +87,18 @@ export class AIRouter {
     modelId: string,
     messages: ChatMessage[],
     context: PromptContext = {},
-    apiKeys?: { claudeKey?: string; geminiKey?: string }
+    apiKeys?: { claudeKey?: string; geminiKey?: string; openRouterKey?: string }
   ): Promise<string> {
     const selectedModel = AVAILABLE_MODELS.find(m => m.id === modelId) || AVAILABLE_MODELS[0];
     const systemPrompt = promptBuilder.buildSystemPrompt(context);
 
+    // If unified OpenRouter key or OAuth token is available, route through OpenRouter
+    if (apiKeys?.openRouterKey) {
+      const openRouter = new OpenRouterProvider(apiKeys.openRouterKey);
+      return await openRouter.complete(messages, systemPrompt, selectedModel.id);
+    }
+
+    // Direct native provider routing
     if (selectedModel.provider === "claude") {
       const claude = new ClaudeProvider(apiKeys?.claudeKey);
       return await claude.complete(messages, systemPrompt, selectedModel.id);

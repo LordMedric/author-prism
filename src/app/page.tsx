@@ -65,7 +65,21 @@ export default function Home() {
     }
   ]);
 
-  const [apiKeys, setApiKeys] = useState<{ claudeKey?: string; geminiKey?: string }>({});
+  const [apiKeys, setApiKeys] = useState<any>({});
+
+  // Hydrate persistent API keys & sign-ins from local device vault on start
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("author_prism_keys_v1");
+        if (stored) {
+          setApiKeys(JSON.parse(stored));
+        }
+      } catch (e) {
+        console.error("Failed to load local vault keys:", e);
+      }
+    }
+  }, []);
 
   // Modals state
   const [isSlideModalOpen, setIsSlideModalOpen] = useState(false);
