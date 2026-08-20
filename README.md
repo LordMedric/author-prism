@@ -51,16 +51,18 @@
 - Node.js 18+ (Node 24 LTS recommended)
 - npm or pnpm
 
-### Installation
+### Running in the Browser
 ```bash
-# Install dependencies
-npm install
-
-# Start the development server
+# Start the local development server
 npm run dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Running as a Native Desktop App
+```bash
+# Launches Author Prism directly in its native desktop window
+npm run desktop
+```
 
 ---
 
