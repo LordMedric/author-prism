@@ -2,12 +2,14 @@
   "name": "author-prism",
   "version": "1.0.0",
   "private": true,
+  "main": "electron/main.js",
   "description": "An offline-capable AI authoring workspace for reflective essays, SWOT analysis, business strategy, and presentations with Harvard referencing, MyBib, and multi-model Claude & Gemini support.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "desktop": "concurrently -k \"next dev\" \"wait-on http://localhost:3000 && electron .\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -47,8 +49,11 @@
     "@types/pdf-parse": "^1.1.4",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "concurrently": "^9.1.2",
+    "electron": "^35.0.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "wait-on": "^8.0.2"
   }
 }
