@@ -1,6 +1,6 @@
 {
   "name": "author-prism",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "private": true,
   "main": "electron/main.js",
   "description": "An offline-capable AI authoring workspace for reflective essays, SWOT analysis, business strategy, and presentations with Harvard referencing, MyBib, and multi-model Claude & Gemini support.",
@@ -28,16 +28,33 @@
     ],
     "win": {
       "target": [
-        "nsis",
-        "portable"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
+    },
+    "nsis": {
+      "artifactName": "AuthorPrism-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "AuthorPrism-Portable-${version}.${ext}"
     },
     "mac": {
       "target": [
         "dmg",
         "zip"
       ],
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "artifactName": "AuthorPrism-${version}.${ext}"
     }
   },
   "dependencies": {
