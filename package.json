@@ -9,7 +9,37 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "desktop": "concurrently -k \"next dev\" \"wait-on http://localhost:3000 && electron .\""
+    "desktop": "concurrently -k \"next dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "dist": "next build && electron-builder",
+    "dist:win": "next build && electron-builder --win",
+    "dist:mac": "next build && electron-builder --mac"
+  },
+  "build": {
+    "appId": "dev.authorprism.app",
+    "productName": "AuthorPrism",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      ".next/standalone/**/*",
+      ".next/static/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity"
+    }
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -51,6 +81,7 @@
     "@types/react-dom": "^19.0.4",
     "concurrently": "^9.1.2",
     "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
