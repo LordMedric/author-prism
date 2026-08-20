@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
   serverExternalPackages: ['pdf-parse', 'mammoth', 'docx', 'pptxgenjs'],
   webpack: (config) => {

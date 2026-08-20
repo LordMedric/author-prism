@@ -1,6 +1,6 @@
 {
   "name": "author-prism",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "main": "electron/main.js",
   "description": "An offline-capable AI authoring workspace for reflective essays, SWOT analysis, business strategy, and presentations with Harvard referencing, MyBib, and multi-model Claude & Gemini support.",
@@ -22,8 +22,7 @@
     },
     "files": [
       "electron/**/*",
-      ".next/standalone/**/*",
-      ".next/static/**/*",
+      ".next/**/*",
       "public/**/*",
       "package.json"
     ],

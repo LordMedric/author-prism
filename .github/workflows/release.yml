@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   build-and-release:
+    name: Build on ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -29,29 +31,31 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build Next.js
+      - name: Build Next.js Production Bundle
         run: npm run build
 
-      - name: Build Windows Binaries (.exe)
+      - name: Build Windows Executables (.exe)
         if: runner.os == 'Windows'
         run: npx electron-builder --win nsis portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build macOS Binaries (.dmg)
+      - name: Build macOS Disk Images (.dmg)
         if: runner.os == 'macOS'
         run: npx electron-builder --mac dmg zip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Binaries to GitHub Release Assets
+      - name: Upload Desktop Binaries to GitHub Release Assets
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          name: Author Prism ${{ github.ref_name }}
           files: |
             dist/*.exe
             dist/*.dmg
             dist/*.zip
             dist/*.blockmap
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
