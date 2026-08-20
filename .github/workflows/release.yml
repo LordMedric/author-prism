@@ -22,27 +22,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
-      - name: Build Next.js Production Bundle
+      - name: Build Next.js
         run: npm run build
 
       - name: Build Windows Executables (.exe)
         if: runner.os == 'Windows'
-        run: npx electron-builder --win nsis portable
+        run: npx electron-builder --win nsis portable --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build macOS Disk Images (.dmg)
         if: runner.os == 'macOS'
-        run: npx electron-builder --mac dmg zip
+        run: npx electron-builder --mac dmg zip --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
