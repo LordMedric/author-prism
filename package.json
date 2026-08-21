@@ -1,6 +1,6 @@
 {
   "name": "author-prism",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "main": "electron/main.js",
   "description": "An offline-capable AI authoring workspace for reflective essays, SWOT analysis, business strategy, and presentations with Harvard referencing, MyBib, and multi-model Claude & Gemini support.",
@@ -16,7 +16,7 @@
   },
   "build": {
     "appId": "dev.authorprism.app",
-    "productName": "AuthorPrism",
+    "productName": "Author Prism",
     "directories": {
       "output": "dist"
     },
@@ -43,7 +43,14 @@
       ]
     },
     "nsis": {
-      "artifactName": "AuthorPrism-Setup-${version}.${ext}"
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Author Prism",
+      "artifactName": "AuthorPrism-Setup-${version}.${ext}",
+      "uninstallDisplayName": "Author Prism"
     },
     "portable": {
       "artifactName": "AuthorPrism-Portable-${version}.${ext}"
